@@ -143,9 +143,11 @@
   <ItemGroup>
     <ClCompile Include="EnumClass.cpp" />
     <ClCompile Include="HG Simulator.cpp" />
+    <ClCompile Include="InitializeGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnumClass.h" />
+    <ClInclude Include="InitializeGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
