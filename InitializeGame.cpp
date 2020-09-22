@@ -21,10 +21,10 @@ AllPlayers createPlayers()
 
 	for (int id{ 0 }; id < maxID; ++id)
 	{
-		newPlayer[id].player_ID = static_cast<PlayerID>(id);
-		newPlayer[id].player_Status = Status::S_ALIVE;
-		newPlayer[id].player_Team = static_cast<PlayerTeam>(teamNB);
-		/*newPlayer[playerIndex].player_Name = "Name: UNKNOWN";*/
+		newPlayer[id].ID = static_cast<PlayerID>(id);
+		newPlayer[id].status = Status::S_ALIVE;
+		newPlayer[id].team = static_cast<PlayerTeam>(teamNB);
+		/*newPlayer[playerIndex].name = "Name: UNKNOWN";*/
 
 		++teamNB;
 		if (teamNB >= maxTeam)
@@ -43,12 +43,12 @@ AllPlayers createPlayers()
 void printPlayer(Player player)
 {
 	std::string id{};
-	std::string name{ player.player_Name };
+	std::string name{ player.name };
 	std::string team{};
 	std::string status{};
-	int nameLenght{ static_cast<int>(player.player_Name.length()) };
+	int nameLenght{ static_cast<int>(player.name.length()) };
 
-	switch (player.player_ID)
+	switch (player.ID)
 	{
 	case PlayerID::ID_00:
 		id = "ID: 00";
@@ -129,7 +129,7 @@ void printPlayer(Player player)
 	default:
 		id = "Unkown ID";
 	}
-	switch (player.player_Team)
+	switch (player.team)
 	{
 	case PlayerTeam::T_01:
 		team = "Team: 01";
@@ -171,7 +171,7 @@ void printPlayer(Player player)
 	default:
 		team = "Unknown Team";
 	}
-	switch (player.player_Status)
+	switch (player.status)
 	{
 	case Status::S_ALIVE:
 		status = "Status: Alive";
@@ -206,7 +206,7 @@ void sortTeam(AllPlayers& allPlayers)
 	{
 		for (int next{ current + 1 }; next < maxPlayer; ++next)
 		{
-			if (allPlayers[current].player_Team > allPlayers[next].player_Team)
+			if (allPlayers[current].team > allPlayers[next].team)
 			{
 				std::swap(allPlayers[current], allPlayers[next]);
 
@@ -277,7 +277,7 @@ void getPlayerName(AllPlayers& player)
 		if (username == "-fillrest")
 			break;
 
-		player[ID].player_Name = username;
+		player[ID].name = username;
 	}
 
 	for (ID; ID < maxPlayer; ++ID)
@@ -362,7 +362,7 @@ void getPlayerName(AllPlayers& player)
 		default:
 			botname = "Unknown name";
 		}
-		player[ID].player_Name = botname;
+		player[ID].name = botname;
 
 	}
 }
