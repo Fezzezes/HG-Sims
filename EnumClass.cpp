@@ -67,9 +67,9 @@ enum class PlayerID
 
 struct Player
 {
-	std::string player_Name{};
-	PlayerID	player_ID{};		//24 id
-	PlayerTeam  player_Team{};		//12 team
-	Status	    player_Status{};	//2 status
+	std::string name{};
+	PlayerID	ID{};		//24 id
+	PlayerTeam  team{};		//12 team
+	Status	    status{};	//2 status
 
 };
