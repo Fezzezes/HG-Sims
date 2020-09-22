@@ -142,11 +142,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EnumClass.cpp" />
+    <ClCompile Include="GetAliveList.cpp" />
     <ClCompile Include="HG Simulator.cpp" />
     <ClCompile Include="InitializeGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnumClass.h" />
+    <ClInclude Include="GetAliveList.h" />
     <ClInclude Include="InitializeGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
