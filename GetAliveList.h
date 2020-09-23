@@ -1,11 +1,13 @@
 #ifndef GETALIVELIST_H
 #define GETALIVELIST_H
 
+using PlayerVector = std::vector <Player>;
+
 int getAlive(AllPlayers& playerList);
 
-std::vector <Player> getAliveList(AllPlayers& playerList, int aliveCount);
+PlayerVector getAliveList(AllPlayers& playerList, int aliveCount);
 
-std::vector <Player> aliveCheck(AllPlayers& playerList);
+PlayerVector aliveCheck(AllPlayers& playerList);
 
 
 #endif // !GETALIVELIST_H

@@ -1,6 +1,9 @@
 #ifndef ENUMCLASS_H
 #define ENUMCLASS_H
 
+int getRandomNumber();
+int getRandomDie(int min, int max);
+
 enum class Status
 {
 	S_ALIVE,

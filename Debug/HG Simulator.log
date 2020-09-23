@@ -1,4 +1,4 @@
-﻿  GetAliveList.cpp
-  HG Simulator.cpp
+﻿  HG Simulator.cpp
+C:\Users\Frank\source\repos\Fezzezes\HG-Sims\HG Simulator.cpp(16,36): error C2398: Element '1': conversion from 'int' to 'unsigned int' requires a narrowing conversion
+  InitializeGame.cpp
   Generating Code...
-  HG Simulator.vcxproj -> C:\Users\Frank\source\repos\Fezzezes\HG-Sims\Debug\HG Simulator.exe
