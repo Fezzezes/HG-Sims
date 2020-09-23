@@ -2,8 +2,24 @@
 #include <string>
 #include <algorithm>
 #include <array>
+#include <random>
+#include <ctime>
 
-//#include"EnumClass.h"
+namespace MyRandom
+{
+std::mt19937 random{ static_cast<std::mt19937::result_type>(std::time(nullptr)) };
+}
+
+std::mt19937 getRandomNumber()
+{
+	return MyRandom::random;
+}
+int getRandomDie(int min, int max)
+{
+	std::uniform_int_distribution die{ min, max };
+	return die(MyRandom::random);
+}
+
 
 enum class Status
 {
@@ -73,3 +89,4 @@ struct Player
 	Status	    status{};	//2 status
 
 };
+

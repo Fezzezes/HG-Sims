@@ -59,7 +59,7 @@ int getAlive(AllPlayers& playerList)
 	return aliveCount;
 }
 
-std::vector <Player> getAliveList(AllPlayers& playerList, int aliveCount)
+PlayerVector getAliveList(AllPlayers& playerList, int aliveCount)
 {
 	std::vector<Player> aliveList(aliveCount);			//create a list the size of the number of alive players
 
@@ -80,10 +80,10 @@ void printAlive(std::vector<Player>& playerList)
 	}
 }
 
-std::vector <Player> aliveCheck(AllPlayers& playerList)
+PlayerVector aliveCheck(AllPlayers& playerList)
 {
 	int aliveCount{ getAlive(playerList) };
-	std::vector <Player> aliveList{ getAliveList(playerList,aliveCount) };
+	PlayerVector aliveList{ getAliveList(playerList,aliveCount) };
 
 	return aliveList;
 }
