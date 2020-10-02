@@ -1,9 +1,14 @@
 #ifndef ENUMCLASS_H
 #define ENUMCLASS_H
 
-int getRandomNumber();
+#include<random>
+#include <Windows.h>
+
+//random Number Generation
+std::mt19937 getRandomNumber();
 int getRandomDie(int min, int max);
 
+//enum classes for Player
 enum class Status
 {
 	S_ALIVE,
@@ -59,11 +64,69 @@ enum class PlayerID
 	ID_12, ID_13, ID_14, ID_15,
 	ID_16, ID_17, ID_18, ID_19,
 	ID_20, ID_21, ID_22, ID_23,
-	ID_24,
+	
 
 	ID_MAX,
 };
+enum class Phase
+{
+	PHASE_DEF,
+	PHASE_OFF,
 
+	PHASE_MAX,
+};
+
+enum class Weapons
+{
+	WP_NORMAL,
+
+	WP_CRAFTEDSPEAR,
+	WP_CRAFTEDSHIVE,
+	WP_ROCK,
+	WP_WOODENSTICK,
+
+	WP_SWORD,
+	WP_BOW,
+	WP_SPONSOREDSPEAR,
+	WP_KNIFE,
+	WP_HAMMER,
+	WP_TRIDENT,
+	WP_CROSSBOW,
+
+	WP_MAX,
+};
+enum class MiscItem
+{
+MI_GHILLIEMANTLE,
+MI_PILLS,
+MI_FOOD,
+MI_BANDAGES,
+};
+enum class DieType
+{
+	AT_STALK,
+	AT_ATK,
+	AT_IDLE,
+	AT_CRAFT,
+	AT_SPONSER,
+	AT_EVENT,
+};
+
+//Struct
+struct ActionMod
+{
+	bool AC_NORMAL;
+	bool AC_AMBUSH;
+	bool AC_HIDE;
+	bool AC_ARMED;
+	bool AC_WOUNDED;
+	bool AC_TIRED;
+	bool AC_WET;
+	bool AC_STARVING;
+	bool AC_SICK;
+	bool SM_CAMOUFLAGED;
+	bool SM_SURPRISED;
+};
 
 struct Player
 {
@@ -71,8 +134,18 @@ struct Player
 	PlayerID	ID;		//24 id
 	PlayerTeam  team;	//12 team
 	Status	    status;	//2 status
-
+	Phase		phase;	//defensive or offensive
+	ActionMod	actionMod;
+	Weapons		weapons;
+	MiscItem	misc;
+	int			kills;
 };
+struct Die
+{
+	DieType type;
+	int roll;
+};
+
 
 #endif // !ENUMCLASS_H
 

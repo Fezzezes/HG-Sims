@@ -2,6 +2,7 @@
 #include <string>
 #include <algorithm>
 #include <array>
+#include <Windows.h>
 
 #include"EnumClass.h"
 #include"InitializeGame.h"
@@ -14,7 +15,7 @@ AllPlayers createPlayers()
 	AllPlayers newPlayer{};
 	/*Index_type playerIndex{ 0 }*/;
 
-	auto maxID{ static_cast<int>(PlayerID::ID_MAX) - 1 };
+	auto maxID{ static_cast<int>(PlayerID::ID_MAX)};
 	auto maxTeam{ static_cast<int>(PlayerTeam::T_MAX) };
 	int teamNB{ 1 };
 
@@ -46,6 +47,7 @@ void printPlayer(Player player)
 	std::string name{ player.name };
 	std::string team{};
 	std::string status{};
+	/*std::string phase{};*/
 	int nameLenght{ static_cast<int>(player.name.length()) };
 
 	switch (player.ID)
@@ -122,10 +124,7 @@ void printPlayer(Player player)
 	case PlayerID::ID_23:
 		id = "ID: 23";
 		break;
-	case PlayerID::ID_24:
-		id = "ID: 24";
-		break;
-
+	
 	default:
 		id = "Unkown ID";
 	}
@@ -184,23 +183,53 @@ void printPlayer(Player player)
 		status = "Unknown Status";
 	}
 
+	//Print Phase
 
-	std::cout << name;
+	/*switch (player.phase)
+	{
+	case Phase::PHASE_DEF:
+		phase = "Defensive Phase";
+		break;
+	case Phase::PHASE_OFF:
+		phase = "Offensive Phase";
+		break;
 
-	if (nameLenght < 8)
-		std::cout << "\t\t" << " | " << id << " | " << team << " | " << status;
+	default:
+		phase = "Unknown";
+
+}*/
+
+	//if the player is dead, color the text red
+	if (player.status == Status::S_DEAD)
+	{
+		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(hConsole, 0x0c); //set the color to red(236)
+
+		std::cout << name;
+
+		if (nameLenght < 8)
+			std::cout << "\t\t" << " | " << id << " | " << team << " | " << status; /*<< " | " << phase;*/
+		else
+			std::cout << '\t' << " | " << id << " | " << team << " | " << status; /*<< " | " << phase;*/
+
+		
+		SetConsoleTextAttribute(hConsole, 7); //set the color back to white(15)
+	}
 	else
-		std::cout << '\t' << " | " << id << " | " << team << " | " << status;
+	{
+		std::cout << name;
 
-	/*std::cout << name   <<'\n';
-	std::cout << id	    <<'\n';
-	std::cout << team   <<'\n';
-	std::cout << status <<'\n';*/
+		if (nameLenght < 8)
+			std::cout << "\t\t" << " | " << id << " | " << team << " | " << status; /*<< " | " << phase;*/
+		else
+			std::cout << '\t' << " | " << id << " | " << team << " | " << status; /*<< " | " << phase;*/
+	}
+	
 }
 
 void sortTeam(AllPlayers& playerList)
 {
-	auto maxPlayer{ static_cast<int>(PlayerID::ID_MAX) - 1 };
+	auto maxPlayer{ static_cast<int>(PlayerID::ID_MAX)};
 
 	for (int current{ 0 }; current < maxPlayer; ++current)
 	{
