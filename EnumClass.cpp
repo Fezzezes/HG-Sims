@@ -89,34 +89,6 @@ enum class Phase
 
 	PHASE_MAX,
 };
-
-//enum class ActionMod
-//{
-//	AC_NORMAL,
-//	AC_AMBUSH,
-//	AC_HIDE,
-//	AC_ARMED,
-//	AC_WOUNDED,
-//	AC_TIRED,
-//	AC_WET,
-//	AC_STARVING,
-//	AC_SICK,
-//};
-//enum class actionMod
-//{
-//	SM_NORMAL,
-//	SM_WOUNDED,
-//	SM_CAMOUFLAGED,
-//	SM_ARMED,
-//	SM_SURPRISED,
-//	SM_TIRED,
-//	SM_WET,
-//	SM_STARVING,
-//	SM_AMBUSH,
-//	SM_SICK,
-//
-//};
-
 enum class Weapons
 {
 	WP_NORMAL,

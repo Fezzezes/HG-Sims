@@ -2,3 +2,5 @@ C:\Users\Frank\Source\Repos\Fezzezes\HG-Sims\Debug\HG Simulator.exe
 C:\Users\Frank\Source\Repos\Fezzezes\HG-Sims\Debug\HG Simulator.pdb
 C:\Users\Admin\Documents\GitHub\HG-Sims\Debug\HG Simulator.exe
 C:\Users\Admin\Documents\GitHub\HG-Sims\Debug\HG Simulator.pdb
+C:\Users\Frank\source\repos\HG-Sims\Debug\HG Simulator.exe
+C:\Users\Frank\source\repos\HG-Sims\Debug\HG Simulator.pdb

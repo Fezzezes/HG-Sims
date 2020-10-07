@@ -10,37 +10,27 @@
 //using AllPlayers = std::array<Player, 24>;
 //using Index_type = AllPlayers::size_type;
 
-AllPlayers createPlayers()
+
+//sort by team
+void sortTeam(AllPlayers& playerList)
 {
-	AllPlayers newPlayer{};
-	/*Index_type playerIndex{ 0 }*/;
+	auto maxPlayer{ static_cast<int>(PlayerID::ID_MAX) };
 
-	auto maxID{ static_cast<int>(PlayerID::ID_MAX)};
-	auto maxTeam{ static_cast<int>(PlayerTeam::T_MAX) };
-	int teamNB{ 1 };
-
-
-	for (int id{ 0 }; id < maxID; ++id)
+	for (int current{ 0 }; current < maxPlayer; ++current)
 	{
-		newPlayer[id].ID = static_cast<PlayerID>(id);
-		newPlayer[id].status = Status::S_ALIVE;
-		newPlayer[id].team = static_cast<PlayerTeam>(teamNB);
-		/*newPlayer[playerIndex].name = "Name: UNKNOWN";*/
-
-		++teamNB;
-		if (teamNB >= maxTeam)
+		for (int next{ current + 1 }; next < maxPlayer; ++next)
 		{
-			teamNB = 1;
-		}
+			if (playerList[current].team > playerList[next].team)
+			{
+				std::swap(playerList[current], playerList[next]);
 
-		/*++playerIndex;*/
+			}
+		}
 	}
 
-
-
-	return newPlayer;
 }
 
+//print individual player and leaderboard
 void printPlayer(Player player)
 {
 	std::string id{};
@@ -226,25 +216,6 @@ void printPlayer(Player player)
 	}
 	
 }
-
-void sortTeam(AllPlayers& playerList)
-{
-	auto maxPlayer{ static_cast<int>(PlayerID::ID_MAX)};
-
-	for (int current{ 0 }; current < maxPlayer; ++current)
-	{
-		for (int next{ current + 1 }; next < maxPlayer; ++next)
-		{
-			if (playerList[current].team > playerList[next].team)
-			{
-				std::swap(playerList[current], playerList[next]);
-
-			}
-		}
-	}
-
-}
-
 void printAllPlayers(AllPlayers& playerList)
 {
 	sortTeam(playerList);
@@ -256,6 +227,7 @@ void printAllPlayers(AllPlayers& playerList)
 	}
 }
 
+//get name from user and fillrest with predefined name
 std::string validatePlayerName()
 {
 	std::string username;
@@ -292,7 +264,6 @@ std::string validatePlayerName()
 
 	return username;
 }
-
 void getPlayerName(AllPlayers& player)
 {
 	int ID{ 0 };
@@ -315,74 +286,86 @@ void getPlayerName(AllPlayers& player)
 
 		switch (ID + 1) // too lazy to recount
 		{
+			//team 1
 		case 1:
 			botname = "Marvel";
 			break;
 		case 2:
-			botname = "Cato";
-			break;
-		case 3:
-			botname = "Adi-Mundi";
-			break;
-		case 4:
-			botname = "Plokoon";
-			break;
-		case 5:
-			botname = "Yarael-Poof";
-			break;
-		case 6:
-			botname = "Jason";
-			break;
-		case 7:
-			botname = "Windu";
-			break;
-		case 8:
-			botname = "Obiwan";
-			break;
-		case 9:
-			botname = "Kit";
-			break;
-		case 10:
-			botname = "Qui-gon";
-			break;
-		case 11:
-			botname = "Thresh";
-			break;
-		case 12:
-			botname = "Peeta";
-			break;
-		case 13:
 			botname = "Glimmer";
 			break;
-		case 14:
+			//team 2
+		case 3:
+			botname = "Cato";
+			break;
+		case 4:
 			botname = "Clove";
 			break;
-		case 15:
-			botname = "Luminara";
+			//team 3
+		case 5:
+			botname = "Circ";
 			break;
-		case 16:
-			botname = "Ashoka";
+		case 6:
+			botname = "Teslee";
 			break;
-		case 17:
+			//team 4
+		case 7:
+			botname = "Mizzen";
+			break;
+		case 8:
+			botname = "Coral";
+			break;
+			//team 5
+		case 9:
 			botname = "FoxFace";
 			break;
-		case 18:
-			botname = "Secura";
+		case 10:
+			botname = "Sol";
 			break;
+			//team 6
+		case 11:
+			botname = "Otto";
+			break;
+		case 12:
+			botname = "Ginne";
+			break;
+			//team 7
+		case 13:
+			botname = "Treech";
+			break;
+		case 14:
+			botname = "Lamina";
+			break;
+			//team 8
+		case 15:
+			botname = "Bobbin";
+			break;
+		case 16:
+			botname = "Wovey";
+			break;
+			//team 9
+		case 17:
+			botname = "Panlo";
+			break;
+		case 18:
+			botname = "Sheaf";
+			break;
+			//team 10
 		case 19:
-			botname = "Shaak-ti";
+			botname = "Tanner";
 			break;
 		case 20:
-			botname = "Bariss";
+			botname = "Brandy";
 			break;
+			//team 11
 		case 21:
-			botname = "Yaddle";
+			botname = "Thresh";
 			break;
 		case 22:
-			botname = "Gallia";
-			break;
-		case 23:
 			botname = "Rue";
+			break;
+			//team 12
+		case 23:
+			botname = "Peeta";
 			break;
 		case 24:
 			botname = "Katniss";
@@ -396,6 +379,31 @@ void getPlayerName(AllPlayers& player)
 	}
 }
 
+//create a 24 player deck
+AllPlayers createPlayers()
+{
+	AllPlayers newPlayer{};
+	
+	auto maxTeam{ static_cast<int>(PlayerTeam::T_MAX) };
+	int id{0};
+
+	for (int team{ 1 }; team < maxTeam; ++team)
+	{
+
+		for (int duo{ 0 }; duo < 2; ++duo)
+		{
+			newPlayer[id].ID = static_cast<PlayerID>(id);
+			newPlayer[id].status = Status::S_ALIVE;
+			newPlayer[id].team = static_cast<PlayerTeam>(team);
+			++id;
+		}
+	
+	}
+
+	return newPlayer;
+}
+
+//initialize the game
 AllPlayers initializeGame()
 {
 	AllPlayers All_Player{ createPlayers() };

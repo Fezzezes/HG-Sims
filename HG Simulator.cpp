@@ -19,8 +19,7 @@ int main()
 {
 	//initialize the game (create an 24 <Player> array)
 	AllPlayers playerList{};
-	//create a vector of <Player> with Alive Status
-	PlayerVector aliveList{};
+
 	bool noWinner{}; //keep playing?
 	bool retry   {}; //play again?
 	bool skip {false}; //skip all days
@@ -33,9 +32,6 @@ int main()
 
 		std::cout << "\n";
 
-		//create a vector of <Player> with Alive Status
-		aliveList = aliveCheck(playerList);
-
 		nextDay(playerList, skip);
 
 		//gameLoop
@@ -43,16 +39,14 @@ int main()
 		while (noWinner)
 		{
 			std::cout << "Today's events: \n-------------------------------------------------------------------------------------- \n";
-			setPlayerPhase(aliveList);				 //Print today's event
+			setPlayerPhase(playerList);				 //Print today's event
 			std::cout << "\nToday's Results: \n------------------------------------------------------------------------------------- \n";
 
-			updatePlayerList(aliveList, playerList); //update the playerList with the status, modifiers and kills
 			printAlive(playerList);					 //Print the scoreboard (playerList)
 			
-			nextDay(playerList, skip);					 //allow the player to see playerStats if desired or start the next day
+			nextDay(playerList, skip);				 //allow the player to see playerStats if desired or start the next day
 
-			aliveList = aliveCheck(aliveList);		 //create the aliveList for the next day
-			noWinner = getWinner(aliveList);		 //Look for a winner (or a tie), if true end the gameLoop
+			noWinner = getWinner(playerList);		 //Look for a winner (or a tie), if true end the gameLoop
 
 		}
 
