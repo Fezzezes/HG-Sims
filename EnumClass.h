@@ -8,6 +8,13 @@
 std::mt19937 getRandomNumber();
 int getRandomDie(int min, int max);
 
+//weapon quality
+constexpr int trash		{5};
+constexpr int common	{10};
+constexpr int uncommon	{15};
+constexpr int rare		{20};
+constexpr int legendary	{30};
+
 //enum classes for Player
 enum class Status
 {
@@ -137,6 +144,7 @@ struct Player
 	Phase		phase;	//defensive or offensive
 	ActionMod	actionMod;
 	Weapons		weapons;
+	int			wQuality;
 	MiscItem	misc;
 	int			kills;
 };

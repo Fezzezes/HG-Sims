@@ -4,3 +4,5 @@ C:\Users\Admin\Documents\GitHub\HG-Sims\Debug\HG Simulator.exe
 C:\Users\Admin\Documents\GitHub\HG-Sims\Debug\HG Simulator.pdb
 C:\Users\Frank\source\repos\HG-Sims\Debug\HG Simulator.exe
 C:\Users\Frank\source\repos\HG-Sims\Debug\HG Simulator.pdb
+C:\Users\Frank\GitHub\HG-Sims\Debug\HG Simulator.exe
+C:\Users\Frank\GitHub\HG-Sims\Debug\HG Simulator.pdb

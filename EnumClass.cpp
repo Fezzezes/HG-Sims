@@ -22,6 +22,13 @@ int getRandomDie(int min, int max)
 	return die(MyRandom::random);
 }
 
+//weapon quality
+constexpr int trash		{ 5  };
+constexpr int common	{ 10 };
+constexpr int uncommon  { 15 };
+constexpr int rare		{ 20 };
+constexpr int legendary { 30 };
+
 //enum Classes for Player
 enum class Status
 {
@@ -153,6 +160,7 @@ struct Player
 	Phase		phase{};
 	ActionMod	actionMod{};
 	Weapons		weapons{};
+	int			wQuality{};
 	MiscItem	misc{};
 	int			kills{};
 };

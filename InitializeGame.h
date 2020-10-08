@@ -7,7 +7,7 @@ using Index_type = AllPlayers::size_type;
 AllPlayers createPlayers();
 
 void printPlayer(Player player);
-void sortTeam(AllPlayers& playerList);
+void sortID(AllPlayers& playerList);
 void printAllPlayers(AllPlayers& playerList);
 std::string validatePlayerName();
 void getPlayerName(AllPlayers& player);

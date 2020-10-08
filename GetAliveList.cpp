@@ -44,7 +44,7 @@ void sortByAlive(AllPlayers &playerList)
 
 void printAlive(AllPlayers& playerList)
 {
-	sortTeam(playerList);
+	sortID(playerList);
 
 	for (const auto& newPlayer : playerList)
 	{

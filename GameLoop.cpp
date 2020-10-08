@@ -25,6 +25,7 @@ void shuffleAliveList(AllPlayers& playerList)
 //Print weapons
 std::string printWeapons	 (AllPlayers& playerList, const int player)
 {
+	//Rock			 (05)
 	if (playerList[player].weapons == Weapons::WP_ROCK)
 	{
 		return "rock";
@@ -142,7 +143,7 @@ std::string printWeaponsDeath(AllPlayers& playerList, const int player)
 	return "no weapon";
 }
 
-//Mods Check
+//Weapons Mods
 int weaponsCheck	(AllPlayers& playerList, const int player)
 {
 	//ROCK			 (05)
@@ -203,6 +204,16 @@ int weaponsCheck	(AllPlayers& playerList, const int player)
 
 	return 0;
 }
+void getLoot		(AllPlayers& playerList, const int agressor, const int victim)
+{
+	if (playerList[agressor].wQuality < playerList[victim].wQuality)
+	{
+		std::cout << playerList[agressor].name << " looted a " << printWeapons(playerList, victim) << " from " << playerList[victim].name << "'s corpse \n";
+		playerList[agressor].weapons = playerList[victim].weapons;
+	}
+}
+
+//Mods Check
 void actionModCheck (int& maxSTK, int& maxATK, AllPlayers& playerList, const int offPlayer)
 {
 	if (playerList[offPlayer].actionMod.AC_AMBUSH)//check for action mod
@@ -333,82 +344,134 @@ void actionModCheck (AllPlayers& playerList, const int offPlayer, const int defP
 	}
 }
 
+
 //Sub Action Roll 
 void craftingRoll	(AllPlayers& playerList, const int player)
 {
 	Die dieCFT{ DieType::AT_CRAFT, getRandomDie(0,49) };
 
 	playerList[player].actionMod.AC_ARMED = true;
-	//Get rock
-	if (dieCFT.roll < 9)
+
+	//not armed
+	if (playerList[player].wQuality < trash) // <5
 	{
-		playerList[player].weapons = Weapons::WP_ROCK;
-		std::cout << playerList[player].name << " found a rock to use as a weapon \n";
+		playerList[player].wQuality = trash;
+
+		//Get rock
+		if (dieCFT.roll < 9)
+		{
+			playerList[player].weapons = Weapons::WP_ROCK;
+			std::cout << playerList[player].name << " found a rock to use as a weapon \n";
+		}
+		//Get wooden stick
+		else if (dieCFT.roll >= 10 && dieCFT.roll < 29)
+		{
+			playerList[player].weapons = Weapons::WP_WOODENSTICK;
+			std::cout << playerList[player].name << " found a stick to use as a weapon \n";
+		}
 	}
-	//Get wooden stick
-	else if (dieCFT.roll >= 10 && dieCFT.roll < 29)
+	//lower than common
+	if(playerList[player].wQuality < common) // <10
 	{
-		playerList[player].weapons = Weapons::WP_WOODENSTICK;
-		std::cout << playerList[player].name << " found a stick to use as a weapon \n";
+		playerList[player].wQuality = common;
+
+		//Get crafted spear
+		if (dieCFT.roll >= 30 && dieCFT.roll < 39)
+		{
+			playerList[player].weapons = Weapons::WP_CRAFTEDSPEAR;
+			std::cout << playerList[player].name << " crafted a spear to use as a weapon \n";
+		}
+		//Get crafted shive
+		else if (dieCFT.roll >= 40)
+		{
+			playerList[player].weapons = Weapons::WP_CRAFTEDSHIVE;
+			std::cout << playerList[player].name << " crafted a shive to use as a weapon \n";
+		}
 	}
-	//Get crafted spear
-	else if (dieCFT.roll >= 30 && dieCFT.roll < 39)
+	//higher than any craftable weapons
+	else
 	{
-		playerList[player].weapons = Weapons::WP_CRAFTEDSPEAR;
-		std::cout << playerList[player].name << " crafted a spear to use as a weapon \n";
+		std::cout << playerList[player].name << " didn't craft anyhing...\n";
 	}
-	//Get crafted shive
-	else if (dieCFT.roll >= 40)
-	{
-		playerList[player].weapons = Weapons::WP_CRAFTEDSHIVE;
-		std::cout << playerList[player].name << " crafted a shive to use as a weapon \n";
-	}
+	
 }
 void sponsorRoll	(AllPlayers& playerList, const int player)
 {
-	Die dieSPS{ DieType::AT_SPONSER, getRandomDie(0,219) };
+	Die dieSPS{ DieType::AT_SPONSER, getRandomDie(0,239) };
 
-	//Get sword
-	if (dieSPS.roll < 19)
+	//weapons lower than uncommon
+	if (playerList[player].wQuality < uncommon) // < 15
 	{
-		playerList[player].weapons = Weapons::WP_SWORD;
-		std::cout << playerList[player].name << " received a sword from a sponsor \n";
-		playerList[player].actionMod.AC_ARMED = true;
+		playerList[player].wQuality = uncommon;
+
+		//Get Knife
+		if (dieSPS.roll >= 60 && dieSPS.roll < 79)
+		{
+			playerList[player].weapons = Weapons::WP_KNIFE;
+			std::cout << playerList[player].name << " received a knife from a sponsor \n";
+			playerList[player].actionMod.AC_ARMED = true;
+		}
+		//Get Mine (does nothing so far)
+		else if (dieSPS.roll >= 80 && dieSPS.roll < 89)
+		{
+			playerList[player].weapons = Weapons::WP_NORMAL;
+			std::cout << playerList[player].name << " received an encouragement letter from a sponsor \n";
+			playerList[player].actionMod.AC_ARMED = true;
+		}
+		//Get Hammer
+		else if (dieSPS.roll >= 90 && dieSPS.roll < 99)
+		{
+			playerList[player].weapons = Weapons::WP_HAMMER;
+			std::cout << playerList[player].name << " received a hammer from a sponsor \n";
+			playerList[player].actionMod.AC_ARMED = true;
+		};
 	}
-	//Get Bow
-	else if (dieSPS.roll >= 20 && dieSPS.roll < 39)
+	//weapons lower than rare
+	if (playerList[player].wQuality < rare)
 	{
-		playerList[player].weapons = Weapons::WP_BOW;
-		std::cout << playerList[player].name << " received a bow and arrows from a sponsor \n";
-		playerList[player].actionMod.AC_ARMED = true;
+		playerList[player].wQuality = rare;
+
+		//Get sword
+		if (dieSPS.roll < 19)
+		{
+			playerList[player].weapons = Weapons::WP_SWORD;
+			std::cout << playerList[player].name << " received a sword from a sponsor \n";
+			playerList[player].actionMod.AC_ARMED = true;
+		}
+		//Get Bow
+		else if (dieSPS.roll >= 20 && dieSPS.roll < 39)
+		{
+			playerList[player].weapons = Weapons::WP_BOW;
+			std::cout << playerList[player].name << " received a bow and arrows from a sponsor \n";
+			playerList[player].actionMod.AC_ARMED = true;
+		}
+		//Get Sponsor Spear
+		else if (dieSPS.roll >= 40 && dieSPS.roll < 59)
+		{
+			playerList[player].weapons = Weapons::WP_SPONSOREDSPEAR;
+			std::cout << playerList[player].name << " received a metal spear from a sponsor \n";
+			playerList[player].actionMod.AC_ARMED = true;
+		}
 	}
-	//Get Sponsor Spear
-	else if (dieSPS.roll >= 40 && dieSPS.roll < 59)
+	//weapons lower than legendary
+	if (playerList[player].wQuality < legendary)
 	{
-		playerList[player].weapons = Weapons::WP_SPONSOREDSPEAR;
-		std::cout << playerList[player].name << " received a metal spear from a sponsor \n";
-		playerList[player].actionMod.AC_ARMED = true;
-	}
-	//Get Knife
-	else if (dieSPS.roll >= 60 && dieSPS.roll < 79)
-	{
-		playerList[player].weapons = Weapons::WP_KNIFE;
-		std::cout << playerList[player].name << " received a knife from a sponsor \n";
-		playerList[player].actionMod.AC_ARMED = true;
-	}
-	//Get Mine (does nothing so far)
-	else if (dieSPS.roll >= 80 && dieSPS.roll < 89)
-	{
-		playerList[player].weapons = Weapons::WP_NORMAL;
-		std::cout << playerList[player].name << " received an encouragement letter from a sponsor \n";
-		playerList[player].actionMod.AC_ARMED = true;
-	}
-	//Get Hammer
-	else if (dieSPS.roll >= 90 && dieSPS.roll < 99)
-	{
-		playerList[player].weapons = Weapons::WP_HAMMER;
-		std::cout << playerList[player].name << " received a hammer from a sponsor \n";
-		playerList[player].actionMod.AC_ARMED = true;
+		playerList[player].wQuality = legendary;
+
+		//Get Bow
+		if (dieSPS.roll >= 220 && dieSPS.roll < 229)
+		{
+			playerList[player].weapons = Weapons::WP_CROSSBOW;
+			std::cout << playerList[player].name << " received a crossbow from a sponsor \n";
+			playerList[player].actionMod.AC_ARMED = true;
+		}
+		//Get Sponsor Spear
+		else if (dieSPS.roll >= 230 && dieSPS.roll < 239)
+		{
+			playerList[player].weapons = Weapons::WP_TRIDENT;
+			std::cout << playerList[player].name << " received a trident from a sponsor \n";
+			playerList[player].actionMod.AC_ARMED = true;
+		};
 	}
 	//Get Bandages
 	else if (dieSPS.roll >= 100 && dieSPS.roll < 129)
@@ -535,8 +598,7 @@ void attackRoll	(AllPlayers& playerList, const int offPlayer, const int defPlaye
 		//Off is killed
 		playerList[offPlayer].status = Status::S_DEAD;
 		playerList[defPlayer].kills += 1;
-		//Def CheckLoot();
-
+	
 		SetConsoleTextAttribute(hConsole, 0x0c);
 
 		//adds the weapon's description to thekill comment
@@ -550,8 +612,9 @@ void attackRoll	(AllPlayers& playerList, const int offPlayer, const int defPlaye
 			std::cout << playerList[offPlayer].name << " was outmatched by " << playerList[defPlayer].name << '\n';
 		}
 
-		//Def CheckLoot();
 		SetConsoleTextAttribute(hConsole, 7);
+
+		getLoot(playerList, defPlayer, offPlayer);
 	}
 	//Off is wounded
 	else if (dieATK.roll >= 20 && dieATK.roll < 34) //(15)
@@ -614,12 +677,12 @@ void attackRoll	(AllPlayers& playerList, const int offPlayer, const int defPlaye
 		//default kill comment
 		else
 		{
-			//off CheckLoot();
+			
 			std::cout << playerList[offPlayer].name << " attacked and killed " << playerList[defPlayer].name << " \n";
 		}
 		SetConsoleTextAttribute(hConsole, 7);
 
-		//off CheckLoot();
+		getLoot(playerList, offPlayer, defPlayer);
 	}
 }
 void stalkRoll	(AllPlayers& playerList, const int offPlayer, const int defPlayer)

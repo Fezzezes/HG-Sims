@@ -12,7 +12,7 @@
 
 
 //sort by team
-void sortTeam(AllPlayers& playerList)
+void sortID(AllPlayers& playerList)
 {
 	auto maxPlayer{ static_cast<int>(PlayerID::ID_MAX) };
 
@@ -20,7 +20,7 @@ void sortTeam(AllPlayers& playerList)
 	{
 		for (int next{ current + 1 }; next < maxPlayer; ++next)
 		{
-			if (playerList[current].team > playerList[next].team)
+			if (playerList[current].ID > playerList[next].ID)
 			{
 				std::swap(playerList[current], playerList[next]);
 
@@ -218,7 +218,7 @@ void printPlayer(Player player)
 }
 void printAllPlayers(AllPlayers& playerList)
 {
-	sortTeam(playerList);
+	sortID(playerList);
 
 	for (const auto& newPlayer : playerList)
 	{
